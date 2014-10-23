@@ -22,7 +22,13 @@
 #define YY_USE_CLASS
 #endif
 #endif
+
+#ifdef _MSC_VER
+#include <malloc.h>
+#else
 #include <alloca.h>
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #define YYBISON 1
