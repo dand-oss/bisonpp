@@ -44,6 +44,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #endif
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "system.h"
 #include "files.h"
 #include "new.h"
@@ -85,10 +87,15 @@ char *header_name=NULL;
 /* AC added end*/
 
 
-
+#ifdef DECL_MKTEMP
 extern char     *mktemp();      /* So the compiler won't complain */
+#endif
+#ifdef DECL_GETENV
 extern char     *getenv();
+#endif
+#ifdef DECL_PERROR
 extern void     perror();
+#endif
 FILE    *tryopen();     /* This might be a good idea */
 void done();
 
@@ -140,15 +147,15 @@ openfiles()
   register char *cp;
 #endif
   char *filename;
-  int base_length;
-  int short_base_length;
+  size_t base_length;
+  size_t short_base_length;
 
 #ifdef VMS
   char *tmp_base = "sys$scratch:b_";
 #else
   char *tmp_base = "/tmp/b.";
 #endif
-  int tmp_len;
+  size_t tmp_len;
 
 #ifdef _MSDOS
   tmp_base = "";

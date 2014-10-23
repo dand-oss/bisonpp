@@ -26,6 +26,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
    symval is set to a pointer to the entry found.  */
 
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 #include "system.h"
 #include "files.h"
@@ -68,7 +69,7 @@ static char *
 grow_token_buffer (p)
      char *p;
 {
-  int offset = p - token_buffer;
+  size_t offset = p - token_buffer;
   maxtoken *= 2;
   token_buffer = (char *) xrealloc(token_buffer, maxtoken + 1);
   return token_buffer + offset;
