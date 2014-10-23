@@ -99,6 +99,9 @@ YYNTBASE = ntokens.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <malloc.h>
 #include "system.h"
 #include "machine.h"
 #include "new.h"
@@ -498,7 +501,7 @@ void
 output_rule_data()
 {
   register int i;
-  register int j;
+  register size_t j;
 
   fprintf(ftable,
      "\n#if YY_%s_DEBUG != 0\nstatic const short yyrline[] = { 0",parser_name);

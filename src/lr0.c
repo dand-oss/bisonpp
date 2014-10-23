@@ -22,6 +22,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
    The entry point is generate_states.  */
 
 #include <stdio.h>
+#include <malloc.h>
 #include "system.h"
 #include "machine.h"
 #include "new.h"
@@ -293,7 +294,7 @@ int symbol;
   register core *sp;
   register int found;
 
-  int n;
+  size_t n;
 
 #ifdef	TRACE
   fprintf(stderr, "Entering get_state, symbol = %d\n", symbol);
@@ -360,7 +361,7 @@ core *
 new_state(symbol)
 int symbol;
 {
-  register int n;
+  register size_t n;
   register core *p;
   register short *isp1;
   register short *isp2;
@@ -380,11 +381,12 @@ int symbol;
   p = (core *) xmalloc((unsigned) (sizeof(core) + (n - 1) * sizeof(short)));
   p->accessing_symbol = symbol;
   p->number = nstates;
-  p->nitems = n;
+  p->nitems = (short)n;
 
   isp2 = p->items;
-  while (isp1 < iend)
+  while (isp1 < iend) {
     *isp2++ = *isp1++;
+  }
 
   last_state->next = p;
   last_state = p;

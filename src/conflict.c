@@ -21,6 +21,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
  #pragma alloca
 #endif
 #include <stdio.h>
+#include <malloc.h>
+#include <memory.h>
 #include "system.h"
 #include "machine.h"
 #include "new.h"

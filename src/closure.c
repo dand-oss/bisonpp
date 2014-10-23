@@ -49,6 +49,7 @@ Frees itemset, ruleset and internal data.
 */
 
 #include <stdio.h>
+#include <malloc.h>
 #include "system.h"
 #include "machine.h"
 #include "new.h"
