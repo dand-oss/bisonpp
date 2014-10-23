@@ -29,6 +29,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
  */
 
 #include <stdio.h>
+#include <malloc.h>
 #include "system.h"
 #include "files.h"
 #include "gram.h"
@@ -57,7 +58,7 @@ typedef short  *rule;
 
 static BSet     N, P, V, V1;
 
-static int      nuseful_productions, nuseless_productions,
+static size_t      nuseful_productions, nuseless_productions,
                 nuseful_nonterminals, nuseless_nonterminals;
 
 
@@ -86,11 +87,11 @@ int n;
 }
 
 
-int
+size_t
 nbits (i)
 unsigned i;
 {
-  int count = 0;
+  size_t count = 0;
 
   while (i != 0) {
     i ^= (i & -i);
@@ -100,12 +101,12 @@ unsigned i;
 }
 
 
-int
+size_t
 bits_size (S, n)
 BSet S;
 int n;
 {
-  int i, count = 0;
+  size_t i, count = 0;
 
   for (i = n - 1; i >= 0; i--)
     count += nbits(S[i]);
@@ -472,8 +473,8 @@ reduce_grammar_tables ()
 
       start_symbol = nontermmap[start_symbol];
 
-      nsyms -= nuseless_nonterminals;
-      nvars -= nuseless_nonterminals;
+      nsyms -= (int)nuseless_nonterminals;
+      nvars -= (int)nuseless_nonterminals;
 
       FREE(nontermmap + ntokens);
     }
