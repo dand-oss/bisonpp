@@ -19,6 +19,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 
 #include <stdio.h>
+#include <string.h>
 #include "system.h"
 #include "machine.h"
 #include "new.h"
@@ -248,7 +249,7 @@ print_grammar()
   int i, j;
   short* rule;
   char buffer[90];
-  int column = 0;
+  size_t column = 0;
 
   /* rule # : LHS -> RHS */
   fputs("\nGrammar\n", foutput);
