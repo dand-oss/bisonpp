@@ -106,7 +106,7 @@ bits_size (S, n)
 BSet S;
 int n;
 {
-  size_t i, count = 0;
+  int i, count = 0;
 
   for (i = n - 1; i >= 0; i--)
     count += nbits(S[i]);
