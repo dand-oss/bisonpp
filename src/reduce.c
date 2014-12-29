@@ -29,7 +29,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
  */
 
 #include <stdio.h>
-#include <malloc.h>
 #include "system.h"
 #include "files.h"
 #include "gram.h"
@@ -58,7 +57,7 @@ typedef short  *rule;
 
 static BSet     N, P, V, V1;
 
-static size_t      nuseful_productions, nuseless_productions,
+static int      nuseful_productions, nuseless_productions,
                 nuseful_nonterminals, nuseless_nonterminals;
 
 
@@ -87,11 +86,11 @@ int n;
 }
 
 
-size_t
+int
 nbits (i)
 unsigned i;
 {
-  size_t count = 0;
+  int count = 0;
 
   while (i != 0) {
     i ^= (i & -i);
@@ -101,7 +100,7 @@ unsigned i;
 }
 
 
-size_t
+int
 bits_size (S, n)
 BSet S;
 int n;
@@ -201,7 +200,7 @@ static void
 useless_nonterminals ()
 {
   BSet Np, Ns;
-  int  i;
+  int  i, n;
 
   /*
    * N is set as built.  Np is set being built this iteration. P is set
@@ -228,6 +227,7 @@ useless_nonterminals ()
    * in this set will appear in the final grammar.
    */
 
+  n = 0;
   while (1)
     {
       for (i = WORDSIZE(nvars) - 1; i >= 0; i--)
@@ -257,7 +257,7 @@ static void
 inaccessable_symbols ()
 {
   BSet  Vp, Vs, Pp;
-  int   i;
+  int   i, n;
   short t;
   rule  r;
 
@@ -295,6 +295,7 @@ inaccessable_symbols ()
 
   SETBIT(V, start_symbol);
 
+  n = 0;
   while (1)
     {
       for (i = WORDSIZE(nsyms) - 1; i >= 0; i--)
@@ -473,8 +474,8 @@ reduce_grammar_tables ()
 
       start_symbol = nontermmap[start_symbol];
 
-      nsyms -= (int)nuseless_nonterminals;
-      nvars -= (int)nuseless_nonterminals;
+      nsyms -= nuseless_nonterminals;
+      nvars -= nuseless_nonterminals;
 
       free(&nontermmap[ntokens]);
     }

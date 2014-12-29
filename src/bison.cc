@@ -17,20 +17,58 @@
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 /* HEADER SECTION */
+#if defined( _MSDOS ) || defined(MSDOS) || defined(__MSDOS__)
+#define __MSDOS_AND_ALIKE
+#endif
+#if defined(_WINDOWS) && defined(_MSC_VER)
+#define __HAVE_NO_ALLOCA
+#define __MSDOS_AND_ALIKE
+#endif
+
+#ifndef alloca
+#if defined( __GNUC__)
+#define alloca __builtin_alloca
+
+#elif (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc)  || defined (__sgi)
+#include <alloca.h>
+
+#elif defined (__MSDOS_AND_ALIKE)
+#include <malloc.h>
+#ifndef __TURBOC__
+/* MS C runtime lib */
+#define alloca _alloca
+#endif
+
+#elif defined(_AIX)
+#include <malloc.h>
+#pragma alloca
+
+#elif defined(__hpux)
+#ifdef __cplusplus
+extern "C" {
+void *alloca (unsigned int);
+};
+#else /* not __cplusplus */
+void *alloca ();
+#endif /* not __cplusplus */
+
+#endif /* not _AIX  not MSDOS, or __TURBOC__ or _AIX, not sparc.  */
+#endif /* alloca not defined.  */
+#ifdef c_plusplus
+#ifndef __cplusplus
+#define __cplusplus
+#endif
+#endif
 #ifdef __cplusplus
 #ifndef YY_USE_CLASS
 #define YY_USE_CLASS
 #endif
-#endif
-
-#ifdef _MSC_VER
-#include <malloc.h>
 #else
-#include <alloca.h>
+#ifndef __STDC__
+#define const
 #endif
-
+#endif
 #include <stdio.h>
-#include <string.h>
 #define YYBISON 1
 $ /* %{ and %header{ and %union, during decl */
 #define YY_@_BISON 1
@@ -73,6 +111,15 @@ $ /* %{ and %header{ and %union, during decl */
 #ifndef YY_@_LSP_NEEDED
 #ifdef YYLSP_NEEDED
 #define YY_@_LSP_NEEDED YYLSP_NEEDED
+/* use goto to be compatible */
+#ifndef YY_@_USE_GOTO
+#define YY_@_USE_GOTO 1
+#endif
+#endif
+
+/* use no goto to be clean in C++ */
+#ifndef YY_@_USE_GOTO
+#define YY_@_USE_GOTO 0
 #endif
 #endif
 #endif
@@ -123,9 +170,20 @@ typedef struct yyltype {
 #define YY_@_ERROR yyerror
 #endif
 #ifndef YY_@_PARSE_PARAM
+#ifndef __STDC__
+#ifndef __cplusplus
+#ifndef YY_USE_CLASS
+#define YY_@_PARSE_PARAM
+#ifndef YY_@_PARSE_PARAM_DEF
+#define YY_@_PARSE_PARAM_DEF
+#endif
+#endif
+#endif
+#endif
+#ifndef YY_@_PARSE_PARAM
 #define YY_@_PARSE_PARAM void
 #endif
-
+#endif
 #if YY_@_COMPATIBILITY != 0
 /* backward compatibility */
 #ifndef YYLTYPE
@@ -248,18 +306,87 @@ $ /* fattrs + tables */
    the next  is replaced by the list of actions, each action
    as one case of the switch.  */
 
+#if YY_@_USE_GOTO != 0
+/*
+ SUPRESSION OF GOTO : on some C++ compiler (sun c++)
+  the goto is strictly forbidden if any constructor/destructor
+  is used in the whole function (very stupid isn't it ?)
+ so goto are to be replaced with a 'while/switch/case construct'
+ here are the macro to keep some apparent compatibility
+*/
+#define YYGOTO(lb) {yy_gotostate=lb;continue;}
+#define YYBEGINGOTO  enum yy_labels yy_gotostate=yygotostart; \
+                     for(;;) switch(yy_gotostate) { case yygotostart: {
+#define YYLABEL(lb) } case lb: {
+#define YYENDGOTO } }
+#define YYBEGINDECLARELABEL enum yy_labels {yygotostart
+#define YYDECLARELABEL(lb) ,lb
+#define YYENDDECLARELABEL  };
+#else
+/* macro to keep goto */
+#define YYGOTO(lb) goto lb
+#define YYBEGINGOTO
+#define YYLABEL(lb) lb:
+#define YYENDGOTO
+#define YYBEGINDECLARELABEL
+#define YYDECLARELABEL(lb)
+#define YYENDDECLARELABEL
+#endif
+/* LABEL DECLARATION */
+YYBEGINDECLARELABEL
+  YYDECLARELABEL(yynewstate)
+  YYDECLARELABEL(yybackup)
+/* YYDECLARELABEL(yyresume) */
+  YYDECLARELABEL(yydefault)
+  YYDECLARELABEL(yyreduce)
+  YYDECLARELABEL(yyerrlab)   /* here on detecting error */
+  YYDECLARELABEL(yyerrlab1)   /* here on error raised explicitly by an action */
+  YYDECLARELABEL(yyerrdefault)  /* current state does not do anything special for the error token. */
+  YYDECLARELABEL(yyerrpop)   /* pop the current state because it cannot handle the error token */
+  YYDECLARELABEL(yyerrhandle)
+YYENDDECLARELABEL
+/* ALLOCA SIMULATION */
+/* __HAVE_NO_ALLOCA */
+#ifdef __HAVE_NO_ALLOCA
+int __alloca_free_ptr(char *ptr,char *ref)
+{if(ptr!=ref) free(ptr);
+ return 0;}
+
+#define __ALLOCA_alloca(size) malloc(size)
+#define __ALLOCA_free(ptr,ref) __alloca_free_ptr((char *)ptr,(char *)ref)
+
+#ifdef YY_@_LSP_NEEDED
+#define __ALLOCA_return(num) \
+            return( __ALLOCA_free(yyss,yyssa)+\
+		    __ALLOCA_free(yyvs,yyvsa)+\
+		    __ALLOCA_free(yyls,yylsa)+\
+		   (num))
+#else
+#define __ALLOCA_return(num) \
+            return( __ALLOCA_free(yyss,yyssa)+\
+		    __ALLOCA_free(yyvs,yyvsa)+\
+		   (num))
+#endif
+#else
+#define __ALLOCA_return(num) return(num)
+#define __ALLOCA_alloca(size) alloca(size)
+#define __ALLOCA_free(ptr,ref)
+#endif
+
+/* ENDALLOCA SIMULATION */
+
 #define yyerrok         (yyerrstatus = 0)
 #define yyclearin       (YY_@_CHAR = YYEMPTY)
 #define YYEMPTY         -2
 #define YYEOF           0
-#define YYACCEPT        return 0
-#define YYABORT         return 1
-#define YYERROR         goto yyerrlab1
+#define YYACCEPT        __ALLOCA_return(0)
+#define YYABORT         __ALLOCA_return(1)
+#define YYERROR         YYGOTO(yyerrlab1)
 /* Like YYERROR except do call yyerror.
    This remains here temporarily to ease the
    transition to the new meaning of YYERROR, for GCC.
    Once GCC version 2 has supplanted version 1, this can go.  */
-#define YYFAIL          goto yyerrlab
+#define YYFAIL          YYGOTO(yyerrlab)
 #define YYRECOVERING()  (!!yyerrstatus)
 #define YYBACKUP(token, value) \
 do                                                              \
@@ -267,7 +394,7 @@ do                                                              \
     { YY_@_CHAR = (token), YY_@_LVAL = (value);                 \
       yychar1 = YYTRANSLATE (YY_@_CHAR);                                \
       YYPOPSTACK;                                               \
-      goto yybackup;                                            \
+      YYGOTO(yybackup);                                            \
     }                                                           \
   else                                                          \
     { YY_@_ERROR ("syntax error: cannot back up"); YYERROR; }   \
@@ -328,11 +455,48 @@ int YY_@_DEBUG_FLAG;                    /*  nonzero means print parse trace     
 #endif
 
 
+#if __GNUC__ > 1                /* GNU C and GNU C++ define this.  */
+#define __yy_bcopy(FROM,TO,COUNT)       __builtin_memcpy(TO,FROM,COUNT)
+#else                           /* not GNU C or C++ */
+
+/* This is the most reliable way to avoid incompatibilities
+   in available built-in functions on various systems.  */
+
+#ifdef __cplusplus
+static void __yy_bcopy (char *from, char *to, int count)
+#else
+#ifdef __STDC__
+static void __yy_bcopy (char *from, char *to, int count)
+#else
+static void __yy_bcopy (from, to, count)
+     char *from;
+     char *to;
+     int count;
+#endif
+#endif
+{
+  register char *f = from;
+  register char *t = to;
+  register int i = count;
+
+  while (i-- > 0)
+    *t++ = *f++;
+}
+#endif
+
 int
 #ifdef YY_USE_CLASS
  YY_@_CLASS::
 #endif
      YY_@_PARSE(YY_@_PARSE_PARAM)
+#ifndef __STDC__
+#ifndef __cplusplus
+#ifndef YY_USE_CLASS
+/* parameter definition without protypes */
+YY_@_PARSE_PARAM_DEF
+#endif
+#endif
+#endif
 {
   register int yystate;
   register int yyn;
@@ -373,6 +537,8 @@ int
 				/*  routines                            */
 
   int yylen;
+/* start loop, in which YYGOTO may be used. */
+YYBEGINGOTO
 
 #if YY_@_DEBUG != 0
   if (YY_@_DEBUG_FLAG)
@@ -397,7 +563,7 @@ int
 /* Push a new state, which is found in  yystate  .  */
 /* In all cases, when you get here, the value and location stacks
    have just been pushed. so pushing a state here evens the stacks.  */
-yynewstate:
+YYLABEL(yynewstate)
 
   *++yyssp = yystate;
 
@@ -441,18 +607,21 @@ yynewstate:
       if (yystacksize >= YYMAXDEPTH)
 	{
 	  YY_@_ERROR("parser stack overflow");
-	  return 2;
+	  __ALLOCA_return(2);
 	}
       yystacksize *= 2;
       if (yystacksize > YYMAXDEPTH)
 	yystacksize = YYMAXDEPTH;
-      yyss = (short *) alloca(yystacksize * sizeof (*yyssp));
-      memcpy((char *)yyss, (char *)yyss1, size * sizeof (*yyssp));
-      yyvs = (YY_@_STYPE *) alloca(yystacksize * sizeof (*yyvsp));
-      memcpy((char *)yyvs, (char *)yyvs1, size * sizeof (*yyvsp));
+      yyss = (short *) __ALLOCA_alloca (yystacksize * sizeof (*yyssp));
+      __yy_bcopy ((char *)yyss1, (char *)yyss, size * sizeof (*yyssp));
+      __ALLOCA_free(yyss1,yyssa);
+      yyvs = (YY_@_STYPE *) __ALLOCA_alloca (yystacksize * sizeof (*yyvsp));
+      __yy_bcopy ((char *)yyvs1, (char *)yyvs, size * sizeof (*yyvsp));
+      __ALLOCA_free(yyvs1,yyvsa);
 #ifdef YY_@_LSP_NEEDED
-      yyls = (YY_@_LTYPE *) alloca(yystacksize * sizeof (*yylsp));
-      memcpy((char *)yyls, (char *)yyls1, size * sizeof (*yylsp));
+      yyls = (YY_@_LTYPE *) __ALLOCA_alloca (yystacksize * sizeof (*yylsp));
+      __yy_bcopy ((char *)yyls1, (char *)yyls, size * sizeof (*yylsp));
+      __ALLOCA_free(yyls1,yylsa);
 #endif
 #endif /* no yyoverflow */
 
@@ -476,18 +645,18 @@ yynewstate:
     fprintf(stderr, "Entering state %d\n", yystate);
 #endif
 
-  goto yybackup;
-yybackup:
+  YYGOTO(yybackup);
+YYLABEL(yybackup)
 
 /* Do appropriate processing given the current state.  */
 /* Read a lookahead token if we need one and don't already have one.  */
-/* yyresume: */
+/* YYLABEL(yyresume) */
 
   /* First try to decide what to do without reference to lookahead token.  */
 
   yyn = yypact[yystate];
   if (yyn == YYFLAG)
-    goto yydefault;
+    YYGOTO(yydefault);
 
   /* Not known => get a lookahead token if don't already have one.  */
 
@@ -535,7 +704,7 @@ yybackup:
 
   yyn += yychar1;
   if (yyn < 0 || yyn > YYLAST || yycheck[yyn] != yychar1)
-    goto yydefault;
+    YYGOTO(yydefault);
 
   yyn = yytable[yyn];
 
@@ -549,12 +718,12 @@ yybackup:
   if (yyn < 0)
     {
       if (yyn == YYFLAG)
-	goto yyerrlab;
+	YYGOTO(yyerrlab);
       yyn = -yyn;
-      goto yyreduce;
+      YYGOTO(yyreduce);
     }
   else if (yyn == 0)
-    goto yyerrlab;
+    YYGOTO(yyerrlab);
 
   if (yyn == YYFINAL)
     YYACCEPT;
@@ -579,17 +748,17 @@ yybackup:
   if (yyerrstatus) yyerrstatus--;
 
   yystate = yyn;
-  goto yynewstate;
+  YYGOTO(yynewstate);
 
 /* Do the default action for the current state.  */
-yydefault:
+YYLABEL(yydefault)
 
   yyn = yydefact[yystate];
   if (yyn == 0)
-    goto yyerrlab;
+    YYGOTO(yyerrlab);
 
 /* Do a reduction.  yyn is the number of a rule to reduce with.  */
-yyreduce:
+YYLABEL(yyreduce)
   yylen = yyr2[yyn];
   if (yylen > 0)
     yyval = yyvsp[1-yylen]; /* implement default value of the action */
@@ -659,9 +828,9 @@ $   /* the action file gets copied in in place of this dollarsign  */
   else
     yystate = yydefgoto[yyn - YYNTBASE];
 
-  goto yynewstate;
+  YYGOTO(yynewstate);
 
-yyerrlab:   /* here on detecting error */
+YYLABEL(yyerrlab)   /* here on detecting error */
 
   if (! yyerrstatus)
     /* If not already recovering from an error, report this error.  */
@@ -712,8 +881,8 @@ yyerrlab:   /* here on detecting error */
 	YY_@_ERROR("parse error");
     }
 
-  goto yyerrlab1;
-yyerrlab1:   /* here on error raised explicitly by an action */
+  YYGOTO(yyerrlab1);
+YYLABEL(yyerrlab1)   /* here on error raised explicitly by an action */
 
   if (yyerrstatus == 3)
     {
@@ -736,18 +905,18 @@ yyerrlab1:   /* here on error raised explicitly by an action */
 
   yyerrstatus = 3;              /* Each real token shifted decrements this */
 
-  goto yyerrhandle;
+  YYGOTO(yyerrhandle);
 
-yyerrdefault:  /* current state does not do anything special for the error token. */
+YYLABEL(yyerrdefault)  /* current state does not do anything special for the error token. */
 
 #if 0
   /* This is wrong; only states that explicitly want error tokens
      should shift them.  */
   yyn = yydefact[yystate];  /* If its default is to accept any token, ok.  Otherwise pop it.*/
-  if (yyn) goto yydefault;
+  if (yyn) YYGOTO(yydefault);
 #endif
 
-yyerrpop:   /* pop the current state because it cannot handle the error token */
+YYLABEL(yyerrpop)   /* pop the current state because it cannot handle the error token */
 
   if (yyssp == yyss) YYABORT;
   yyvsp--;
@@ -767,26 +936,26 @@ yyerrpop:   /* pop the current state because it cannot handle the error token */
     }
 #endif
 
-yyerrhandle:
+YYLABEL(yyerrhandle)
 
   yyn = yypact[yystate];
   if (yyn == YYFLAG)
-    goto yyerrdefault;
+    YYGOTO(yyerrdefault);
 
   yyn += YYTERROR;
   if (yyn < 0 || yyn > YYLAST || yycheck[yyn] != YYTERROR)
-    goto yyerrdefault;
+    YYGOTO(yyerrdefault);
 
   yyn = yytable[yyn];
   if (yyn < 0)
     {
       if (yyn == YYFLAG)
-	goto yyerrpop;
+	YYGOTO(yyerrpop);
       yyn = -yyn;
-      goto yyreduce;
+      YYGOTO(yyreduce);
     }
   else if (yyn == 0)
-    goto yyerrpop;
+    YYGOTO(yyerrpop);
 
   if (yyn == YYFINAL)
     YYACCEPT;
@@ -802,7 +971,9 @@ yyerrhandle:
 #endif
 
   yystate = yyn;
-  goto yynewstate;
+  YYGOTO(yynewstate);
+/* end loop, in which YYGOTO may be used. */
+  YYENDGOTO
 }
 
 /* END */
