@@ -99,9 +99,6 @@ YYNTBASE = ntokens.
 */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <malloc.h>
 #include "system.h"
 #include "machine.h"
 #include "new.h"
@@ -501,7 +498,7 @@ void
 output_rule_data()
 {
   register int i;
-  register size_t j;
+  register int j;
 
   fprintf(ftable,
      "\n#if YY_%s_DEBUG != 0\nstatic const short yyrline[] = { 0",parser_name);
@@ -1419,7 +1416,7 @@ FILE *fin,*fout;
 	  {if (c == '$')
 	    {
   	    if (!nolinesflag)
-   		{fprintf(fout,
+		{fprintf(fout,
                 "\n/* #line %d \"%s\" */\n#line @\n",
 		 (*pcounter), quoted_filename(fil_name));
                 }
@@ -1676,7 +1673,7 @@ char *quoted_filename(f)
 char *f;
 {
  static char *buffer=NULL;
- static int buff_size=0;
+ static size_t buff_size=0;
  char *p;
  if(buff_size<strlen(f)*2+1)
   {
