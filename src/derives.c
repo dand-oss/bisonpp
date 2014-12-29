@@ -24,7 +24,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
    terminated with -1.  */
 
 #include <stdio.h>
-#include <malloc.h>
 #include "system.h"
 #include "new.h"
 #include "types.h"

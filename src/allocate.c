@@ -19,7 +19,13 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 
 #include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#else
+extern char *calloc ();
+extern char *realloc ();
+#endif
 
 extern void done ();
 
