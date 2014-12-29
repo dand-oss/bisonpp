@@ -26,7 +26,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 The entry point is reader().  */
 
 #include <stdio.h>
-#include <string.h>
 #include <ctype.h>
 #include "system.h"
 #include "files.h"
@@ -266,7 +265,7 @@ read_declarations ()
 		  semantic_parser = 1;
 		  open_extra_files();
 		  fprintf(stderr,
-                "%%semantic_parser no more supported in this version of bison !!! \n errors will be done ! use classic bison, use simple parser, or addapt this version to semantic parser\n");
+                "%semantic_parser no more supported in this version of bison !!! \n errors will be done ! use classic bison, use simple parser, or addapt this version to semantic parser\n");
 		}
 	      break;
 
@@ -472,7 +471,7 @@ parse_token_decl (what_is, what_is_not)
   register int token = 0;
   register int prev;
   register char *typename = 0;
-  size_t k;
+  int k;
 
 /*   start_lineno = lineno; JF */
 
@@ -548,7 +547,7 @@ parse_start_decl ()
 void
 parse_type_decl ()
 {
-  register size_t k;
+  register int k;
   register char *name;
 /*   register int start_lineno; JF */
 
@@ -605,7 +604,7 @@ void
 parse_assoc_decl (assoc)
 int assoc;
 {
-  register size_t k;
+  register int k;
   register char *name = NULL;
 /*  register int start_lineno; JF */
   register int prev = 0;	/* JF added = 0 to keep lint happy */
@@ -1599,7 +1598,7 @@ record_rule_line ()
 int
 get_type()
 {
-  register size_t k;
+  register int k;
   register int t;
   register char *name;
 
