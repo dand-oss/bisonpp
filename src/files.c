@@ -31,7 +31,9 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define XHFILE "GNU_BISON:[000000]BISON.H"
 #endif
 #else
-#include <unistd.h>
+#if !defined(_MSC_VER)
+# include <unistd.h>
+#endif
 #ifndef XPFILE
 #define XPFILE "bison.cc"
 #endif
