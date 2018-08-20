@@ -585,8 +585,10 @@ yydefault:
 /* Do a reduction.  yyn is the number of a rule to reduce with.  */
 yyreduce:
   yylen = yyr2[yyn];
-  if (yylen > 0)
-    yyval = yyvsp[1-yylen]; /* implement default value of the action */
+  static YY_@_STYPE yyempty;
+  yyval = yylen > 0 
+      ?  yyvsp[1-yylen] /* implement default value of the action */
+      : yyempty ;
 
 #if YY_@_DEBUG != 0
   if (YY_@_DEBUG_FLAG)
