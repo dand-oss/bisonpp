@@ -83,7 +83,7 @@ getargs(argc, argv)
      int argc;
      char *argv[];
 {
-  register int c;
+  int c;
 
   verboseflag = 0;
   definesflag = 0;
