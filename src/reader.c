@@ -200,8 +200,8 @@ and copy the contents of any %{ ... %} groups to ftable.  */
 void
 read_declarations ()
 {
-  register int c;
-  register int tok;
+  int c;
+  int tok;
 
   for (;;)
     {
@@ -337,10 +337,10 @@ void
 copy_a_definition (do_put)
 void (*do_put)();
 {
-  register int c;
-  register int match;
-  register int ended;
-  register int after_percent;  /* -1 while reading a character if prev char was % */
+  int c;
+  int match;
+  int ended;
+  int after_percent;  /* -1 while reading a character if prev char was % */
   int cplus_comment;
 
   after_percent = 0;
@@ -467,10 +467,10 @@ void
 parse_token_decl (what_is, what_is_not)
      int what_is, what_is_not;
 {
-/*   register int start_lineno; JF */
-  register int token = 0;
-  register int prev;
-  register char *typename = 0;
+/*   int start_lineno; JF */
+  int token = 0;
+  int prev;
+  char *typename = 0;
   int k;
 
 /*   start_lineno = lineno; JF */
@@ -547,9 +547,9 @@ parse_start_decl ()
 void
 parse_type_decl ()
 {
-  register int k;
-  register char *name;
-/*   register int start_lineno; JF */
+  int k;
+  char *name;
+/*   int start_lineno; JF */
 
   if (lex() != TYPENAME)
     fatal("ill-formed %type declaration");
@@ -562,7 +562,7 @@ parse_type_decl ()
 
   for (;;)
     {
-      register int t;
+      int t;
 
       if(ungetc(skip_white_space(), finput) == '%')
 	return;
@@ -604,10 +604,10 @@ void
 parse_assoc_decl (assoc)
 int assoc;
 {
-  register int k;
-  register char *name = NULL;
-/*  register int start_lineno; JF */
-  register int prev = 0;	/* JF added = 0 to keep lint happy */
+  int k;
+  char *name = NULL;
+/*  int start_lineno; JF */
+  int prev = 0;	/* JF added = 0 to keep lint happy */
 
   lastprec++;  /* Assign a new precedence level, never 0.  */
 
@@ -615,7 +615,7 @@ int assoc;
 
   for (;;)
     {
-      register int t;
+      int t;
 
       if(ungetc(skip_white_space(), finput) == '%')
 	return;
@@ -687,9 +687,9 @@ int assoc;
 void
 parse_union_decl()
 {
-  register int c;
-  register int count;
-  register int in_comment;
+  int c;
+  int count;
+  int in_comment;
   int cplus_comment;
 
   if (typed)
@@ -805,8 +805,8 @@ parse_union_decl()
 void
 parse_expect_decl()
 {
-  register int c;
-  register int count;
+  int c;
+  int count;
   char buffer[20];
 
   c = getc(finput);
@@ -838,8 +838,8 @@ symbol_list *rule;
 {
   static char *msg = "invalid $ value";
 
-  register int i;
-  register symbol_list *rp;
+  int i;
+  symbol_list *rp;
 
   if (n < 0)
     fatal(msg);
@@ -872,12 +872,12 @@ copy_guard(rule, stack_offset)
 symbol_list *rule;
 int stack_offset;
 {
-  register int c;
-  register int n;
-  register int count;
-  register int match;
-  register int ended;
-  register char *type_name;
+  int c;
+  int n;
+  int count;
+  int match;
+  int ended;
+  char *type_name;
   int brace_flag = 0;
   int cplus_comment;
 
@@ -997,7 +997,7 @@ int stack_offset;
 
 	  if (c == '<')
 	    {
-	      register char *cp = token_buffer;
+	      char *cp = token_buffer;
 
 	      while ((c = getc(finput)) != '>' && c > 0)
 		*cp++ = c;
@@ -1092,12 +1092,12 @@ copy_action(rule, stack_offset)
 symbol_list *rule;
 int stack_offset;
 {
-  register int c;
-  register int n;
-  register int count;
-  register int match;
-  register int ended;
-  register char *type_name;
+  int c;
+  int n;
+  int count;
+  int match;
+  int ended;
+  char *type_name;
   int cplus_comment;
 
   /* offset is always 0 if parser has already popped the stack pointer */
@@ -1209,7 +1209,7 @@ int stack_offset;
 
 	      if (c == '<')
 		{
-		  register char *cp = token_buffer;
+		  char *cp = token_buffer;
 
 		  while ((c = getc(finput)) != '>' && c > 0)
 		    *cp++ = c;
@@ -1295,7 +1295,7 @@ whose name cannot conflict with the user's names. */
 bucket *
 gensym()
 {
-  register bucket *sym;
+  bucket *sym;
 
   sprintf (token_buffer, "@%d", ++gensym_count);
   sym = getsym(token_buffer);
@@ -1316,11 +1316,11 @@ labelled by the rule number they apply to.  */
 void
 readgram()
 {
-  register int t;
-  register bucket *lhs;
-  register symbol_list *p;
-  register symbol_list *p1;
-  register bucket *bp;
+  int t;
+  bucket *lhs;
+  symbol_list *p;
+  symbol_list *p1;
+  bucket *bp;
 
   symbol_list *crule;	/* points to first symbol_list of current rule.  */
 			/* its symbol is the lhs of the rule.   */
@@ -1334,7 +1334,7 @@ readgram()
     {
       if (t == IDENTIFIER || t == BAR)
 	{
-	  register int actionflag = 0;
+	  int actionflag = 0;
 	  int rulelength = 0;  /* number of symbols in rhs of this rule so far  */
 	  int xactions = 0;	/* JF for error checking */
 	  bucket *first_rhs = 0;
@@ -1399,8 +1399,8 @@ readgram()
 		 If one does, exit this rule now.  */
 	      if (t == IDENTIFIER)
 		{
-		  register bucket *ssave;
-		  register int t1;
+		  bucket *ssave;
+		  int t1;
 
 		  ssave = symval;
 		  t1 = lex();
@@ -1419,7 +1419,7 @@ readgram()
 		 non-terminal.  */
 	      if (actionflag)
 		{
-		  register bucket *sdummy;
+		  bucket *sdummy;
 
 		  /* Since the action was written out with this rule's */
 		  /* number, we must write give the new rule this number */
@@ -1598,9 +1598,9 @@ record_rule_line ()
 int
 get_type()
 {
-  register int k;
-  register int t;
-  register char *name;
+  int k;
+  int t;
+  char *name;
 
   t = lex();
 
@@ -1645,9 +1645,9 @@ Set up vectors tags and sprec of names and precedences of symbols.  */
 void
 packsymbols()
 {
-  register bucket *bp;
-  register int tokno = 1;
-  register int last_user_token_number;
+  bucket *bp;
+  int tokno = 1;
+  int last_user_token_number;
 
   /* int lossage = 0; JF set but not used */
 
@@ -1683,7 +1683,7 @@ packsymbols()
 
   if (translations)
     {
-      register int i;
+      int i;
 
       token_translations = NEW2(max_user_token_number+1, short);
 
@@ -1730,10 +1730,10 @@ packsymbols()
 void
 packgram()
 {
-  register int itemno;
-  register int ruleno;
-  register symbol_list *p;
-/*  register bucket *bp; JF unused */
+  int itemno;
+  int ruleno;
+  symbol_list *p;
+/*  bucket *bp; JF unused */
 
   bucket *ruleprec;
 
@@ -1792,9 +1792,9 @@ int
 read_signed_integer (stream)
      FILE *stream;
 {
-  register int c = getc(stream);
-  register int sign = 1;
-  register int n;
+  int c = getc(stream);
+  int sign = 1;
+  int n;
 
   if (c == '-')
     {

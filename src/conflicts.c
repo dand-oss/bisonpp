@@ -72,8 +72,8 @@ static int rrc_count;
 void
 initialize_conflicts()
 {
-  register int i;
-/*  register errs *sp; JF unused */
+  int i;
+/*  errs *sp; JF unused */
 
   conflicts = NEW2(nstates, char);
   shiftset = NEW2(tokensetsize, unsigned);
@@ -92,14 +92,14 @@ void
 set_conflicts(state)
 int state;
 {
-  register int i;
-  register int k;
-  register shifts *shiftp;
-  register unsigned *fp2;
-  register unsigned *fp3;
-  register unsigned *fp4;
-  register unsigned *fp1;
-  register int symbol;
+  int i;
+  int k;
+  shifts *shiftp;
+  unsigned *fp2;
+  unsigned *fp3;
+  unsigned *fp4;
+  unsigned *fp1;
+  int symbol;
 
   if (consistent[state]) return;
 
@@ -180,11 +180,11 @@ resolve_sr_conflict(state, lookaheadnum)
 int state;
 int lookaheadnum;
 {
-  register int i;
-  register int mask;
-  register unsigned *fp1;
-  register unsigned *fp2;
-  register int redprec;
+  int i;
+  int mask;
+  unsigned *fp1;
+  unsigned *fp2;
+  int redprec;
   /* Extra parens avoid errors on Ultrix 4.3.  */
   errs *errp = (errs *) alloca ((sizeof(errs) + ntokens * sizeof(short)));
   short *errtokens = errp->errs;
@@ -283,9 +283,9 @@ flush_shift(state, token)
 int state;
 int token;
 {
-  register shifts *shiftp;
-  register int k, i;
-/*  register unsigned symbol; JF unused */
+  shifts *shiftp;
+  int k, i;
+/*  unsigned symbol; JF unused */
 
   shiftp = shift_table[state];
 
@@ -315,7 +315,7 @@ char *resolution;
 void
 conflict_log()
 {
-  register int i;
+  int i;
 
   src_total = 0;
   rrc_total = 0;
@@ -338,7 +338,7 @@ conflict_log()
 void
 verbose_conflict_log()
 {
-  register int i;
+  int i;
 
   src_total = 0;
   rrc_total = 0;
@@ -424,14 +424,14 @@ void
 count_sr_conflicts(state)
 int state;
 {
-  register int i;
-  register int k;
-  register int mask;
-  register shifts *shiftp;
-  register unsigned *fp1;
-  register unsigned *fp2;
-  register unsigned *fp3;
-  register int symbol;
+  int i;
+  int k;
+  int mask;
+  shifts *shiftp;
+  unsigned *fp1;
+  unsigned *fp2;
+  unsigned *fp3;
+  int symbol;
 
   src_count = 0;
 
@@ -492,14 +492,14 @@ void
 count_rr_conflicts(state)
 int state;
 {
-  register int i;
-  register int j;
-  register int count;
-  register unsigned mask;
-  register unsigned *baseword;
-  register unsigned *wordp;
-  register int m;
-  register int n;
+  int i;
+  int j;
+  int count;
+  unsigned mask;
+  unsigned *baseword;
+  unsigned *wordp;
+  int m;
+  int n;
 
   rrc_count = 0;
 
@@ -539,24 +539,24 @@ void
 print_reductions(state)
 int state;
 {
-  register int i;
-  register int j;
-  register int k;
-  register unsigned *fp1;
-  register unsigned *fp2;
-  register unsigned *fp3;
-  register unsigned *fp4;
-  register int rule;
-  register int symbol;
-  register unsigned mask;
-  register int m;
-  register int n;
-  register int default_LA;
-  register int default_rule;
-  register int cmax;
-  register int count;
-  register shifts *shiftp;
-  register errs *errp;
+  int i;
+  int j;
+  int k;
+  unsigned *fp1;
+  unsigned *fp2;
+  unsigned *fp3;
+  unsigned *fp4;
+  int rule;
+  int symbol;
+  unsigned mask;
+  int m;
+  int n;
+  int default_LA;
+  int default_rule;
+  int cmax;
+  int count;
+  shifts *shiftp;
+  errs *errp;
   int nodefault = 0;
 
   for (i = 0; i < tokensetsize; i++)
