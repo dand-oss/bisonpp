@@ -1628,7 +1628,7 @@ output_token_enum(file)
 FILE *file;
 {
   fprintf(file, "\tenum YY_%s_ENUM_TOKEN {\n", parser_name);
-  fprintf(file, "\t\tYY_%s_NULL_TOKEN = 0\n", parser_name, parser_name);
+  fprintf(file, "\t\tYY_%s_NULL_TOKEN = 0\n", parser_name);
   output_token_defines_fmt(file, "\t\t,%s = %d\n", 0);
   if (semantic_parser) /* just for compatibility with semantic parser */
     output_token_defines_fmt(file, "\t\t,T%s = %d\n", 1);
