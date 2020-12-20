@@ -3,6 +3,13 @@ project(bisonpp VERSION 1.0.0 LANGUAGES C)
 
 set(exename "bison++")
 
+###############
+# ASI default settings
+list(APPEND CMAKE_MODULE_PATH "$ENV{ASV_CMAKE}")
+include(asv_cmake_defaults)
+asv_cmake_defaults( )
+###############
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
