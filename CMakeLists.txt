@@ -33,14 +33,15 @@ foreach(s
   list(APPEND bisonpp_sources src/${s})
 endforeach()
 
-if(MSVC)
-  # microsoft needs getopt
-  list(APPEND bisonpp_sources src/getopt.c src/getopt1.c)
-endif()
-
 add_executable(${exename})
 target_sources(${exename} PRIVATE 
     ${bisonpp_sources})
+if(MSVC)
+  # microsoft needs getopt
+  target_sources(${exename} PRIVATE
+      src/getopt.c
+      src/getopt1.c)
+endif()
 target_compile_definitions(${exename} PRIVATE
     STDC_HEADERS=1
     HAVE_STRING_H=1
