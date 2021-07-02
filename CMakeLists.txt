@@ -5,31 +5,27 @@ set(exename "bison++")
 
 include(GNUInstallDirs)
 
-foreach(s
-    lr0
-    allocate.c
-    closure.c
-    conflict.c
-    derives.c
-    files.c
-    getargs.c
-    gram.c
-    lalr.c lex.c
-    main.c
-    nullable.c
-    output.c
-    print.c
-    reader.c
-    reduce.c
-    symtab.c
-    version.c
-    warshall.c
-)
-  list(APPEND bisonpp_sources src/${s})
-endforeach()
-
 add_executable(${exename})
-target_sources(${exename} PRIVATE ${bisonpp_sources})
+target_sources(${exename} PRIVATE
+    src/lr0
+    src/allocate.c
+    src/closure.c
+    src/conflict.c
+    src/derives.c
+    src/files.c
+    src/getargs.c
+    src/gram.c
+    src/lalr.c lex.c
+    src/main.c
+    src/nullable.c
+    src/output.c
+    src/print.c
+    src/reader.c
+    src/reduce.c
+    src/symtab.c
+    src/version.c
+    src/warshall.c
+)
 if(MSVC)
   # microsoft needs getopt
   target_sources(${exename} PRIVATE src/getopt.c src/getopt1.c)
