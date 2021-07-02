@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #ifdef MSDOS
 #ifndef _MSDOS
 #define _MSDOS
@@ -31,4 +27,8 @@
 #if !defined(STDC_HEADERS) && defined(HAVE_MEMORY_H)
 #include <memory.h>
 #endif /* not STDC_HEADERS and HAVE_MEMORY_H */
+#define bcopy(src, dst, num) memcpy((dst), (src), (num))
+#else /* not STDC_HEADERS and not HAVE_STRING_H */
+#include <strings.h>
+/* memory.h and strings.h conflict on some systems.  */
 #endif /* not STDC_HEADERS and not HAVE_STRING_H */

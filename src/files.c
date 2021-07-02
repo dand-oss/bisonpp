@@ -44,8 +44,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #endif
 
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "system.h"
 #include "files.h"
 #include "new.h"
@@ -85,6 +83,7 @@ char *parser_fname="bison.cc";
 char *hskel_fname="bison.h";
 char *header_name=NULL;
 /* AC added end*/
+
 
 
 #ifdef DECL_MKTEMP
@@ -143,23 +142,21 @@ void
 openfiles()
 {
   char *name_base;
-#ifdef _MSDOS
   register char *cp;
-#endif
   char *filename;
-  size_t base_length;
-  size_t short_base_length;
+  int base_length;
+  int short_base_length;
 
 #ifdef VMS
   char *tmp_base = "sys$scratch:b_";
 #else
   char *tmp_base = "/tmp/b.";
 #endif
-  size_t tmp_len;
+  int tmp_len;
 
 #ifdef _MSDOS
   tmp_base = "";
-  strlwr (infile);
+  _strlwr (infile);
 #endif /* MSDOS */
 
   tmp_len = strlen (tmp_base);
@@ -170,7 +167,7 @@ openfiles()
 	 For other output files, remove the ".c" or ".tab.c" suffix.  */
       name_base = spec_outfile;
 #ifdef _MSDOS
-      strlwr (name_base);
+      _strlwr (name_base);
 #endif /* MSDOS */
       base_length = strlen (name_base);
       /* SHORT_BASE_LENGTH includes neither ".tab" nor ".c".  */
@@ -201,7 +198,7 @@ openfiles()
       strcat (name_base, ".tab");
 #endif
 #ifdef _MSDOS
-      strlwr (name_base);
+      _strlwr (name_base);
 #endif /* MSDOS */
     }
   else
@@ -357,10 +354,7 @@ open_extra_files()
 {
   FILE *ftmp;
   int c;
-  char *filename;
-#ifdef _MSDOS
-  char *cp;
-#endif
+  char *filename, *cp;
 
   fclose(fparser);
   filename=cparserfile;
