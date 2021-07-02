@@ -23,7 +23,6 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include <limits.h>
 #include <stdio.h>
-#include <malloc.h>
 #include "system.h"
 #include "new.h"
 #include "gram.h"
@@ -294,7 +293,7 @@ int symbol;
   register core *sp;
   register int found;
 
-  size_t n;
+  int n;
 
 #ifdef	TRACE
   fprintf(stderr, "Entering get_state, symbol = %d\n", symbol);
@@ -361,7 +360,7 @@ core *
 new_state(symbol)
 int symbol;
 {
-  register size_t n;
+  register int n;
   register core *p;
   register short *isp1;
   register short *isp2;
@@ -381,12 +380,11 @@ int symbol;
   p = (core *) xmalloc((unsigned) (sizeof(core) + (n - 1) * sizeof(short)));
   p->accessing_symbol = symbol;
   p->number = nstates;
-  p->nitems = (short)n;
+  p->nitems = n;
 
   isp2 = p->items;
-  while (isp1 < iend) {
+  while (isp1 < iend)
     *isp2++ = *isp1++;
-  }
 
   last_state->next = p;
   last_state = p;

@@ -1,4 +1,9 @@
 /* before anything */
+#ifdef c_plusplus
+#ifndef __cplusplus
+#define __cplusplus
+#endif
+#endif
 #ifdef __cplusplus
 #ifndef YY_USE_CLASS
 #define YY_USE_CLASS
@@ -42,6 +47,15 @@ $ /* %{ and %header{ and %union, during decl */
 #define YY_@_LSP_NEEDED YYLSP_NEEDED
 #endif
 #endif
+/* use goto to be compatible */
+#ifndef YY_@_USE_GOTO
+#define YY_@_USE_GOTO 1
+#endif
+#endif
+
+/* use no goto to be clean in C++ */
+#ifndef YY_@_USE_GOTO
+#define YY_@_USE_GOTO 0
 #endif
 
 /* DEFAULT LTYPE*/
@@ -89,8 +103,21 @@ typedef struct yyltype {
 #ifndef YY_@_ERROR
 #define YY_@_ERROR yyerror
 #endif
+
+#ifndef YY_@_PARSE_PARAM
+#ifndef __STDC__
+#ifndef __cplusplus
+#ifndef YY_USE_CLASS
+#define YY_@_PARSE_PARAM
+#ifndef YY_@_PARSE_PARAM_DEF
+#define YY_@_PARSE_PARAM_DEF
+#endif
+#endif
+#endif
+#endif
 #ifndef YY_@_PARSE_PARAM
 #define YY_@_PARSE_PARAM void
+#endif
 #endif
 
 #if YY_@_COMPATIBILITY != 0
