@@ -15,7 +15,8 @@ target_sources(${exename} PRIVATE
     src/files.c
     src/getargs.c
     src/gram.c
-    src/lalr.c lex.c
+    src/lalr.c
+    src/lex.c
     src/main.c
     src/nullable.c
     src/output.c
