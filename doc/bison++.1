@@ -328,18 +328,18 @@ char *text;
 .PP
 // class definition
 .PP
-class parser
+class parse
 .PP
 {
 .PP
 public:
 .\"bloc1[
 .IP
-enum yy_parser_enum_token {
+enum yy_parse_enum_token {
 .RS
 .\"bloc2[
 .IP
-YY_parser_NULL_TOKEN = 0
+YY_parse_NULL_TOKEN = 0
 .IP
 ,TOKEN_FIRST = 256
 .IP
@@ -362,9 +362,9 @@ int yyparse (yyparse_PARAM);
 virtual void yyerror(const char *msg) ;
 .\"bloc1]
 .PP
-#ifdef YY_parser_PURE
+#ifdef YY_parse_PURE
 .PP
-#ifdef YY_parser_LSP_NEEDED
+#ifdef YY_parse_LSP_NEEDED
 .\"bloc1[
 .IP
 virtual int yylex (int *yylval,yyltype *yylloc) ;
@@ -386,7 +386,7 @@ virtual int yylex() %LEX_BODY;
 int yylval;
 .\"bloc1]
 .PP
-#ifdef YY_parser_LSP_NEEDED
+#ifdef YY_parse_LSP_NEEDED
 .\"bloc1[
 .IP
 yyltype yylloc;
@@ -402,7 +402,7 @@ int yychar;
 .PP
 #endif
 .PP
-#if YY_parser_DEBUG != 0
+#if YY_parse_DEBUG != 0
 .\"bloc1[
 .IP
 int yydebug;
@@ -413,7 +413,7 @@ int yydebug;
 public:
 .\"bloc1[
 .IP
-parser();
+parse();
 .\"bloc1]
 .PP
 public:
@@ -422,11 +422,11 @@ public:
 .PP
 // here is the constructor code
 .PP
-parser::parser()
+parse::parse()
 .PP
 {
 .PP
-#if YY_parser_DEBUG != 0
+#if YY_parse_DEBUG != 0
 .PP
 yydebug=0;
 .PP

@@ -163,11 +163,11 @@
 	>	char *text;
 	\} yyltype;
 	// class definition 
-	class parser 
+	class parse 
 	\{
 	public: 
-	>	enum yy_parser_enum_token \{
-	>>		YY_parser_NULL_TOKEN = 0
+	>	enum yy_parse_enum_token \{
+	>>		YY_parse_NULL_TOKEN = 0
 	>>		,TOKEN_FIRST = 256
 	>>		,TOKEN_NEXT = 257
 	>>		,AND_SO_ON = 258
@@ -176,8 +176,8 @@
 	public:
 	>	int yyparse (yyparse_PARAM);
 	>	virtual void yyerror(const char *msg) ;
-	#ifdef YY_parser_PURE
-	#ifdef YY_parser_LSP_NEEDED
+	#ifdef YY_parse_PURE
+	#ifdef YY_parse_LSP_NEEDED
 	>	virtual int  yylex (int *yylval,yyltype *yylloc) ;
 	#else
 	>	virtual int  yylex (int *yylval) ;
@@ -185,23 +185,23 @@
 	#else
 	>	virtual int yylex() \%LEX_BODY;
 	>	int yylval;
-	#ifdef YY_parser_LSP_NEEDED
+	#ifdef YY_parse_LSP_NEEDED
 	>	yyltype yylloc;
 	#endif
 	>	int   yynerrs;
 	>	int    yychar;
 	#endif
-	#if YY_parser_DEBUG != 0
+	#if YY_parse_DEBUG != 0
 	>	int yydebug;   
 	#endif
 	public:
-	>	parser();
+	>	parse();
 	public:
 	\};
 	// here is the constructor code
-	parser::parser() 
+	parse::parse() 
 	\{
-	#if YY_parser_DEBUG != 0
+	#if YY_parse_DEBUG != 0
 	yydebug=0;
 	#endif
 	\};
