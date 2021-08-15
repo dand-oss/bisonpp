@@ -57,6 +57,7 @@ FILE *fattrs = NULL;
 FILE *fguard = NULL;
 FILE *faction = NULL;
 FILE *fparser = NULL;
+FILE *fhskel = NULL;
 
 /* File name specified with -o for the output file, or 0 if no -o.  */
 char *spec_outfile;
@@ -74,7 +75,6 @@ char *tmpdefsfile;
 /* AC added */
 char *hskelfile=NULL;
 char *cparserfile=NULL;
-FILE *fhskel=NULL;
 char *parser_name="parse";
 int parser_defined=0;
 int line_fparser=1;
@@ -441,6 +441,9 @@ int k;
 
   if (fparser)
     fclose(fparser);
+
+  if (fhskel)
+    fclose(fhskel);
 
   if (foutput)
     fclose(foutput);
