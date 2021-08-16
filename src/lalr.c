@@ -433,8 +433,7 @@ initialize_F()
 
   for (i = 0; i < ngotos; i++)
     {
-      if (reads[i])
-	FREE(reads[i]);
+      FREE(reads[i]);
     }
 
   FREE(reads);
@@ -525,8 +524,7 @@ build_relations()
   new_includes = transpose(includes, ngotos);
 
   for (i = 0; i < ngotos; i++)
-    if (includes[i])
-      FREE(includes[i]);
+    FREE(includes[i]);
 
   FREE(includes);
 
@@ -636,7 +634,7 @@ compute_FOLLOWS()
 
   for (i = 0; i < ngotos; i++)
     {
-      if (includes[i]) FREE(includes[i]);
+      FREE(includes[i]);
     }
 
   FREE(includes);

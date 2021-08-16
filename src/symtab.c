@@ -139,8 +139,7 @@ free_symtab()
 	{
 	  bptmp = bp->link;
 #if 0 /* This causes crashes because one string can appear more than once.  */
-	  if (bp->type_name)
-	    FREE(bp->type_name);
+	  FREE(bp->type_name);
 #endif
 	  FREE(bp);
 	  bp = bptmp;

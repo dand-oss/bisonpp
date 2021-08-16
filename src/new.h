@@ -22,7 +22,7 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define	NEW2(n, t)	((t *) xmalloc((unsigned) ((n) * sizeof(t))))
 
 #ifdef __STDC__
-#define	FREE(x)		(x ? (void) free((char *) (x)) : (void)0)
+#define	FREE(x)		(free((x)))
 #else
 #define FREE(x) 	((x) != 0 && (free ((char *) (x)), 0))
 #endif

@@ -1140,10 +1140,8 @@ pack_table()
 
   for (i = 0; i < nvectors; i++)
     {
-      if (froms[i])
-	FREE(froms[i]);
-      if (tos[i])
-	FREE(tos[i]);
+      FREE(froms[i]);
+      FREE(tos[i]);
     }
 
   FREE(froms);
