@@ -52,15 +52,9 @@ char *
 copys(s)
 char *s;
 {
-  register int i;
-  register char *cp;
   register char *result;
 
-  i = 1;
-  for (cp = s; *cp; cp++)
-    i++;
-
-  result =  xmalloc((unsigned int)i);
+  result = NEW2(strlen(s)+1, char);
   strcpy(result, s);
   return (result);
 }

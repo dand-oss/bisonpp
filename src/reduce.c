@@ -450,7 +450,7 @@ reduce_grammar_tables ()
 	      sprec[n] = sprec[i];
 	      tags[n] = tags[i];
 	    } else {
-	      free(tags[i]);
+	      FREE(tags[i]);
 	    }
 	}
 
@@ -475,7 +475,7 @@ reduce_grammar_tables ()
       nsyms -= nuseless_nonterminals;
       nvars -= nuseless_nonterminals;
 
-      free(&nontermmap[ntokens]);
+      FREE(nontermmap + ntokens);
     }
 }
 

@@ -1819,7 +1819,7 @@ char *n;
       fatals("parser name already defined as \"%s\"and redefined to \"%s\"\n",parser_name,n);
     else
       parser_defined++;
-      parser_name=(char *)xmalloc(strlen(n)+1);
+      parser_name=NEW2(strlen(n)+1, char);
       strcpy(parser_name,n);
    }
  else /* use only */

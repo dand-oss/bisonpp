@@ -1676,9 +1676,9 @@ char *f;
  char *p;
  if(buff_size<strlen(f)*2+1)
   {
-   free(buffer);
+   FREE(buffer);
    buff_size=strlen(f)*2+1;
-   buffer=xmalloc(buff_size);
+   buffer=NEW2(buff_size, char);
   }
  for(p=buffer;*f;f++)
   {if(*f=='\\')

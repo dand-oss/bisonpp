@@ -185,7 +185,7 @@ openfiles()
       short_base_length = strlen (spec_file_prefix);
       /* Count room for `.tab'.  */
       base_length = short_base_length + 4;
-      name_base = (char *) xmalloc (base_length + 1);
+      name_base = NEW2(base_length + 1, char);
       /* Append `.tab'.  */
       strcpy (name_base, spec_file_prefix);
 #ifdef VMS
@@ -233,7 +233,7 @@ openfiles()
   cp = getenv("INIT");
   if (filename == 0 && cp != NULL)
     {FILE *tst;
-      filename = (char *)xmalloc(strlen(cp) + strlen(PFILE) + 2);
+      filename = NEW2(strlen(cp) + strlen(PFILE) + 2, char);
       strcpy(filename, PFILE);
       if((tst=fopen(filename,"r"))!=NULL)
        {fclose(tst);}
@@ -248,7 +248,7 @@ openfiles()
 #endif /* MSDOS */
   {char *p=filename ? filename : PFILE;
 
-  parser_fname=(char *)xmalloc(strlen(p)+1);
+  parser_fname=NEW2(strlen(p)+1, char);
   strcpy(parser_fname,p);
   }
   fparser = tryopen(parser_fname, "r");
@@ -261,7 +261,7 @@ openfiles()
   cp = getenv("INIT");
   if (filename == 0 && cp != NULL)
     {FILE *tst;
-      filename = (char *)xmalloc(strlen(cp) + strlen(HFILE) + 2);
+      filename = NEW2(strlen(cp) + strlen(HFILE) + 2, char);
       strcpy(filename, HFILE);
       if((tst=fopen(filename,"r"))!=NULL)
        {fclose(tst);}
@@ -277,7 +277,7 @@ openfiles()
 #endif /* MSDOS */
   {char *p=filename ? filename : HFILE;
 
-  hskel_fname=(char *)xmalloc(strlen(p)+1);
+  hskel_fname=NEW2(strlen(p)+1, char);
   strcpy(hskel_fname,p);
   }
 
@@ -364,7 +364,7 @@ open_extra_files()
   cp = getenv("INIT");
   if (filename == 0 && cp != NULL)
     {FILE *tst;
-      filename = (char *)xmalloc(strlen(cp) + strlen(PFILE1) + 2);
+      filename = NEW2(strlen(cp) + strlen(PFILE1) + 2, char);
       strcpy(filename, PFILE1);
       if((tst=fopen(filename,"r"))!=NULL)
        {fclose(tst);}
@@ -380,7 +380,7 @@ open_extra_files()
 #endif /* MSDOS */
   {char *p=filename ? filename : PFILE1;
 
-  parser_fname=(char *)xmalloc(strlen(p)+1);
+  parser_fname=NEW2(strlen(p)+1, char);
   strcpy(parser_fname,p);
   }
   fparser = tryopen(parser_fname, "r");
