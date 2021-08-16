@@ -1674,12 +1674,13 @@ char *quoted_filename(f)
 char *f;
 {
  static char *buffer=NULL;
- static int buff_size=0;
+ static unsigned buff_size=0;
  char *p;
  if(buff_size<strlen(f)*2+1)
   {
-   if(buffer !=NULL ) free(buffer);
-   buffer=xmalloc(strlen(f)*2+1);
+   free(buffer);
+   buff_size=strlen(f)*2+1;
+   buffer=xmalloc(buff_size);
   }
  for(p=buffer;*f;f++)
   {if(*f=='\\')
