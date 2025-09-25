@@ -60,6 +60,6 @@ extern FILE *fhskel;
 extern char *parser_name;
 extern int parser_defined;
 extern int yylsp_needed;
-char *quoted_filename(); /* quote filename, especially on DOS */
+char *quoted_filename(char *f); /* quote filename, especially on DOS */
 
 /* AC added end*/

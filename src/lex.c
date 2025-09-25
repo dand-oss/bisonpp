@@ -39,8 +39,8 @@ extern int translations;
 
 int parse_percent_token();
 
-extern void fatals();
-extern void fatal();
+extern void fatals(char* fmt, ...);
+extern void fatal(char *s);
 
 /* Buffer for storing the current token.  */
 char *token_buffer;

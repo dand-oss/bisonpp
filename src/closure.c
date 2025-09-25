@@ -61,7 +61,7 @@ extern char **tags;
 void set_fderives();
 void set_firsts();
 
-extern void RTC();
+extern void RTC(unsigned *, int);
 
 short *itemset;
 short *itemsetend;

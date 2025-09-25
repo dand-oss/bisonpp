@@ -44,7 +44,11 @@ static int      statisticsflag;	/* XXXXXXX */
 #define TRUE	(1)
 #define FALSE	(0)
 #endif
+#if !defined(__cplusplus) && !defined(__bool_true_false_are_defined) && __STDC_VERSION__ < 202311L
+#ifndef bool
 typedef int bool;
+#endif
+#endif
 typedef unsigned *BSet;
 typedef short  *rule;
 
@@ -68,7 +72,7 @@ static void print_results();
 static void print_notices();
 void dump_grammar();
 
-extern void fatals ();
+extern void fatals(char* fmt, ...);
 
 
 bool

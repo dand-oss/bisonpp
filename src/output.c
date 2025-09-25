@@ -136,9 +136,9 @@ void output_rule_data();
 void output_defines();
 void output_actions();
 void token_actions();
-void save_row();
+void save_row(int state);
 void goto_actions();
-void save_column();
+void save_column(int symbol, int default_state);
 void sort_actions();
 void pack_table();
 void output_base();
@@ -150,13 +150,13 @@ void free_itemset();
 void free_shifts();
 void free_reductions();
 void free_itemsets();
-int action_row();
-int default_goto();
-int matching_state();
-int pack_vector();
+int action_row(int state);
+int default_goto(int symbol);
+int matching_state(int vector);
+int pack_vector(int vector);
 
-extern void berror();
-extern void fatals();
+extern void berror(char *s);
+extern void fatals(char* fmt, ...);
 
 static int nvectors;
 static int nentries;
@@ -175,14 +175,13 @@ static int lowzero;
 static int high;
 
 void
-output_section();
-void
-output_token_defines_fmt();
+output_section(FILE *fin, FILE *fout);
+void output_token_defines_fmt(FILE *file, char *fmt, int notrans);
 extern bucket *errtoken;
-void output_token_defines();
-void output_token_const_def();
-void output_token_const_decl();
-void output_token_enum();
+void output_token_defines(FILE *file);
+void output_token_const_def(FILE *file);
+void output_token_const_decl(FILE *file);
+void output_token_enum(FILE *file);
 extern int line_fparser;
 extern int line_fhskel;
 extern char *parser_fname;

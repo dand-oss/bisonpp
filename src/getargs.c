@@ -34,7 +34,7 @@ extern char *header_name;
 extern char *program_name;
 extern char *version_string;
 
-extern void fatal();
+extern void fatal(char *s);
 
 struct option longopts[] =
 {

@@ -97,8 +97,8 @@ extern char     *getenv();
 #ifdef DECL_PERROR
 extern void     perror();
 #endif
-FILE    *tryopen();     /* This might be a good idea */
-void done();
+FILE    *tryopen(char *, char *);     /* This might be a good idea */
+void done(int);
 
 extern char *program_name;
 extern int verboseflag;

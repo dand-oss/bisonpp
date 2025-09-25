@@ -56,10 +56,10 @@ extern void output_headers();
 extern void output_trailers();
 extern void free_symtab();
 extern void open_extra_files();
-extern void fatal();
-extern void fatals();
-extern void unlex();
-extern void done();
+extern void fatal(char *s);
+extern void fatals(char* fmt, ...);
+extern void unlex(int t);
+extern void done(int k);
 
 extern int skip_white_space();
 extern int parse_percent_token();
@@ -67,19 +67,18 @@ extern int lex();
 
 void read_declarations();
 void copy_definition();
-void parse_token_decl();
+void parse_token_decl(int what_is, int what_is_not);
 void parse_start_decl();
 void parse_type_decl();
-void parse_assoc_decl();
+void parse_assoc_decl(int assoc);
 void parse_union_decl();
 void parse_expect_decl();
-void copy_action();
 void readgram();
 void record_rule_line();
 void packsymbols();
 void output_token_defines();
 void packgram();
-int read_signed_integer();
+int read_signed_integer(FILE *stream);
 int get_type();
 
 typedef
@@ -90,6 +89,8 @@ typedef
       bucket *ruleprec;
     }
   symbol_list;
+
+void copy_action(symbol_list *rule, int stack_offset);
 
 
 
@@ -118,14 +119,14 @@ extern char *version_string;
 
 extern void output_before_read();
 extern  void output_about_token();
-void set_parser_name();
-void cputc();
-void hputc();
-void copy_a_definition();
+void set_parser_name(char *n);
+void cputc(int c);
+void hputc(int c);
+void copy_a_definition(void (*do_put)(int c));
 void copy_header_definition();
 void parse_name_declaration();
 void parse_define();
-void read_a_name();
+void read_a_name(char *buf, int len);
 
 void
 reader()
@@ -335,7 +336,7 @@ int c;
 
 void
 copy_a_definition (do_put)
-void (*do_put)();
+void (*do_put)(int c);
 {
   int c;
   int match;
@@ -1586,7 +1587,7 @@ record_rule_line ()
   if (nrules >= rline_allocated)
     {
       rline_allocated = nrules * 2;
-      rline = (short *) xrealloc (rline,
+      rline = (short *) xrealloc ((char *)rline,
 				 rline_allocated * sizeof (short));
     }
   rline[nrules] = lineno;

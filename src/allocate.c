@@ -27,7 +27,7 @@ extern char *calloc ();
 extern char *realloc ();
 #endif
 
-extern void done ();
+extern void done (int);
 
 extern char *program_name;
 
