@@ -193,7 +193,10 @@ int state;
 int lookaheadnum;
 {
   register int i;
-  register int mask;
+  // unsigned (not int): mask starts at 1 and is left-shifted up to 1<<31, then
+  // wraps to 0 as the loop terminator. A signed shift into/past the sign bit is
+  // undefined behaviour (UBSan trap); unsigned makes the shift and wrap defined.
+  register unsigned mask;
   register unsigned *fp1;
   register unsigned *fp2;
   register int redprec;

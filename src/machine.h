@@ -34,6 +34,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #endif
 
 #define	WORDSIZE(n)	(((n) + BITS_PER_WORD - 1) / BITS_PER_WORD)
-#define	SETBIT(x, i)	((x)[(i)/BITS_PER_WORD] |= (1<<((i) % BITS_PER_WORD)))
-#define RESETBIT(x, i)	((x)[(i)/BITS_PER_WORD] &= ~(1<<((i) % BITS_PER_WORD)))
-#define BITISSET(x, i)	(((x)[(i)/BITS_PER_WORD] & (1<<((i) % BITS_PER_WORD))) != 0)
+// 1U (not 1): the bit arrays are unsigned, and i % BITS_PER_WORD reaches 31,
+// so shifting a signed 1 into the sign bit is undefined behaviour (UBSan trap).
+#define	SETBIT(x, i)	((x)[(i)/BITS_PER_WORD] |= (1U<<((i) % BITS_PER_WORD)))
+#define RESETBIT(x, i)	((x)[(i)/BITS_PER_WORD] &= ~(1U<<((i) % BITS_PER_WORD)))
+#define BITISSET(x, i)	(((x)[(i)/BITS_PER_WORD] & (1U<<((i) % BITS_PER_WORD))) != 0)

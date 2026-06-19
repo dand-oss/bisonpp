@@ -123,7 +123,7 @@ set_fderives()
       b = 0;
       for (j = ntokens; j < nsyms; j++)
 	{
-	  if (cword & (1 << b))
+	  if (cword & (1U << b))
 	    {
 	      rp = derives[j];
 	      while ((ruleno = *rp++) > 0)
@@ -259,7 +259,7 @@ int n;
 
 	  for (b = 0; b < BITS_PER_WORD; b++)
 	    {
-	      if (word & (1 << b))
+	      if (word & (1U << b))
 		{
 		  itemno = rrhs[ruleno];
 		  while (csp < csend && *csp < itemno)
