@@ -20,6 +20,8 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include <limits.h>
 #include <stdio.h>
+#include "gram.h"
+#include "new.h"
 #include "system.h"
 
 extern	int lineno;
@@ -33,6 +35,7 @@ char *program_name;
 
 extern void getargs(int argc, char *argv[]), openfiles(), reader(), reduce_grammar();
 extern void set_derives(), set_nullable(), generate_states();
+extern void free_derives(), free_nullable();
 extern void lalr(), initialize_conflicts(), verbose(), terse();
 extern void output(), done(int k);
 
@@ -81,6 +84,11 @@ main(int argc, char *argv[])
 
   /* output the tables and the parser to ftable.  In file output. */
   output();
+  free_derives();
+  free_nullable();
+  FREE(rprec + 1);
+  FREE(rprecsym + 1);
+  FREE(rassoc + 1);
   done(failure);
 }
 
