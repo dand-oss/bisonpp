@@ -77,16 +77,14 @@ verbose()
 
 
 void
-print_token(extnum, token)
-int extnum, token;
+print_token(int extnum, int token)
 {
   fprintf(foutput, " type %d is %s\n", extnum, tags[token]);
 }
 
 
 void
-print_state(state)
-int state;
+print_state(int state)
 {
   fprintf(foutput, "\n\nstate %d\n\n", state);
   print_core(state);
@@ -95,8 +93,7 @@ int state;
 
 
 void
-print_core(state)
-int state;
+print_core(int state)
 {
   register int i;
   register int k;
@@ -142,8 +139,7 @@ int state;
 
 
 void
-print_actions(state)
-int state;
+print_actions(int state)
 {
   register int i;
   register int k;

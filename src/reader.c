@@ -321,22 +321,19 @@ copy_header_definition ()
  copy_a_definition (hputc);
 }
 void
-hputc(c)
-int c;
+hputc(int c)
 {
  putc(c,ftable);
  if(definesflag) putc(c,fdefines);
 }
 void
-cputc(c)
-int c;
+cputc(int c)
 {
  putc(c,ftable);
 };
 
 void
-copy_a_definition (do_put)
-void (*do_put)(int c);
+copy_a_definition(void (*do_put)(int c))
 {
   int c;
   int match;
@@ -465,8 +462,7 @@ For %token, what_is is STOKEN and what_is_not is SNTERM.
 For %nterm, the arguments are reversed.  */
 
 void
-parse_token_decl (what_is, what_is_not)
-     int what_is, what_is_not;
+parse_token_decl(int what_is, int what_is_not)
 {
 /*   int start_lineno; JF */
   int token = 0;
@@ -602,8 +598,7 @@ parse_type_decl ()
 /* assoc is either LEFT_ASSOC, RIGHT_ASSOC or NON_ASSOC.  */
 
 void
-parse_assoc_decl (assoc)
-int assoc;
+parse_assoc_decl(int assoc)
 {
   int k;
   char *name = NULL;
@@ -833,9 +828,7 @@ parse_expect_decl()
 /* Get the data type (alternative in the union) of the value for symbol n in rule rule.  */
 
 char *
-get_type_name(n, rule)
-int n;
-symbol_list *rule;
+get_type_name(int n, symbol_list *rule)
 {
   static char *msg = "invalid $ value";
 
@@ -869,9 +862,7 @@ which says where to find $0 with respect to the top of the stack,
 for the simple parser in which the stack is not popped until after the guard is run.  */
 
 void
-copy_guard(rule, stack_offset)
-symbol_list *rule;
-int stack_offset;
+copy_guard(symbol_list *rule, int stack_offset)
 {
   int c;
   int n;
@@ -1089,9 +1080,7 @@ stack_offset is the number of values in the current rule so far,
 which says where to find $0 with respect to the top of the stack.  */
 
 void
-copy_action(rule, stack_offset)
-symbol_list *rule;
-int stack_offset;
+copy_action(symbol_list *rule, int stack_offset)
 {
   int c;
   int n;
@@ -1790,8 +1779,7 @@ packgram()
 /* Read a signed integer from STREAM and return its value.  */
 
 int
-read_signed_integer (stream)
-     FILE *stream;
+read_signed_integer(FILE *stream)
 {
   int c = getc(stream);
   int sign = 1;
@@ -1814,8 +1802,7 @@ read_signed_integer (stream)
   return n * sign;
 }
 
-void set_parser_name(n)
-char *n;
+void set_parser_name(char *n)
 {
  if(n) /* define */
    {if(parser_defined) /* redef */
@@ -1836,9 +1823,7 @@ char *n;
    }
 }
 
-void read_a_name(buf,len)
-char *buf;
-int len;
+void read_a_name(char *buf, int len)
 {int c,l;
  for(c = skip_white_space(),l=0;
      (isalnum(c) || c == '_');

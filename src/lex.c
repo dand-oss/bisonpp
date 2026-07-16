@@ -65,8 +65,7 @@ init_lex()
 
 
 static char *
-grow_token_buffer (p)
-     char *p;
+grow_token_buffer(char *p)
 {
   int offset = p - token_buffer;
   maxtoken *= 2;
@@ -143,8 +142,7 @@ skip_white_space()
 
 
 void
-unlex(token)
-int token;
+unlex(int token)
 {
   unlexed = token;
   unlexed_symval = symval;

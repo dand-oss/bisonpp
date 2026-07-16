@@ -35,9 +35,8 @@ extern char * version_string;
 char *spec_name_prefix;
 char *spec_file_prefix;
 
-getargs(argc,argv)
-     int argc;
-     char *argv[];
+int
+getargs(int argc, char *argv[])
 {
   register char *cp;
   static char Input_File[256];
@@ -128,8 +127,7 @@ getargs(argc,argv)
  *	See if "NAME" is present
  */
 int
-cli_present(Name)
-     char *Name;
+cli_present(char *Name)
 {
   struct {int Size; char *Ptr;} Descr;
 
@@ -142,9 +140,7 @@ cli_present(Name)
  *	Get value of "NAME"
  */
 int
-cli_get_value(Name,Buffer,Size)
-     char *Name;
-     char *Buffer;
+cli_get_value(char *Name, char *Buffer, int Size)
 {
   struct {int Size; char *Ptr;} Descr1,Descr2;
 

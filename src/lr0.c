@@ -283,8 +283,7 @@ Create a new state if no equivalent one exists already.
 Used by append_states  */
 
 int
-get_state(symbol)
-int symbol;
+get_state(int symbol)
 {
   register int key;
   register short *isp1;
@@ -357,8 +356,7 @@ int symbol;
 /* subroutine of get_state.  create a new state for those items, if necessary.  */
 
 core *
-new_state(symbol)
-int symbol;
+new_state(int symbol)
 {
   register int n;
   register core *p;

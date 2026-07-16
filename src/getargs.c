@@ -58,8 +58,7 @@ struct option longopts[] =
 };
 
 
-void usage (stream)
-     FILE *stream;
+void usage(FILE *stream)
 {
   fprintf(stderr, "\
 Usage:\n\
@@ -79,9 +78,7 @@ Usage:\n\
 
 
 void
-getargs(argc, argv)
-     int argc;
-     char *argv[];
+getargs(int argc, char *argv[])
 {
   register int c;
 

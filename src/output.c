@@ -732,8 +732,7 @@ token_actions()
    a token gets to handle it.  */
 
 int
-action_row(state)
-int state;
+action_row(int state)
 {
   register int i;
   register int j;
@@ -896,8 +895,7 @@ int state;
 
 
 void
-save_row(state)
-int state;
+save_row(int state)
 {
   register int i;
   register int count;
@@ -980,8 +978,7 @@ goto_actions()
 
 
 int
-default_goto(symbol)
-int symbol;
+default_goto(int symbol)
 {
   register int i;
   register int m;
@@ -1018,9 +1015,7 @@ int symbol;
 
 
 void
-save_column(symbol, default_state)
-int symbol;
-int default_state;
+save_column(int symbol, int default_state)
 {
   register int i;
   register int m;
@@ -1151,8 +1146,7 @@ pack_table()
 
 
 int
-matching_state(vector)
-int vector;
+matching_state(int vector)
 {
   register int i;
   register int j;
@@ -1192,8 +1186,7 @@ int vector;
 
 
 int
-pack_vector(vector)
-int vector;
+pack_vector(int vector)
 {
   register int i;
   register int j;
@@ -1389,8 +1382,7 @@ void
  output_section(fparser,ftable);
 }
 void
-output_section(fin,fout)
-FILE *fin,*fout;
+output_section(FILE *fin, FILE *fout)
 {
   register int c;
   int dummy;
@@ -1587,8 +1579,7 @@ output_about_token()
 
 
 void
-output_token_defines(file)
-FILE *file;
+output_token_defines(FILE *file)
 {
   output_token_defines_fmt(file, "#define %s %d\n", 0);
   if (semantic_parser)
@@ -1597,8 +1588,7 @@ FILE *file;
 
 
 void
-output_token_const_def(file)
-FILE *file;
+output_token_const_def(FILE *file)
 {
   char line[256];
   sprintf(line, "const int YY_%s_CLASS::%%s = %%d;\n", parser_name);
@@ -1612,8 +1602,7 @@ FILE *file;
 
 
 void
-output_token_const_decl(file)
-FILE *file;
+output_token_const_decl(FILE *file)
 {
   output_token_defines_fmt(file, "\tstatic const int %s;\n", 0);
   if (semantic_parser)
@@ -1622,8 +1611,7 @@ FILE *file;
 
 
 void
-output_token_enum(file)
-FILE *file;
+output_token_enum(FILE *file)
 {
   fprintf(file, "\tenum YY_%s_ENUM_TOKEN {\n", parser_name);
   fprintf(file, "\t\tYY_%s_NULL_TOKEN = 0\n", parser_name);
@@ -1635,10 +1623,7 @@ FILE *file;
 
 
 void
-output_token_defines_fmt(file,fmt,notrans)
-FILE *file;
-char *fmt;
-int notrans;
+output_token_defines_fmt(FILE *file, char *fmt, int notrans)
 {
   bucket *bp;
 
@@ -1667,8 +1652,7 @@ int notrans;
 }
 
 
-char *quoted_filename(f)
-char *f;
+char *quoted_filename(char *f)
 {
  static char *buffer=NULL;
  static unsigned buff_size=0;

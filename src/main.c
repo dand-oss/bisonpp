@@ -39,9 +39,7 @@ extern void output(), done(int k);
 
 /* VMS complained about using `int'.  */
 int
-main(argc, argv)
-int argc;
-char *argv[];
+main(int argc, char *argv[])
 {
   program_name = argv[0];
   failure = 0;
@@ -89,8 +87,7 @@ char *argv[];
 /* functions to report errors which prevent a parser from being generated */
 
 void
-fatal(s)
-char *s;
+fatal(char *s)
 {
   extern char *infile;
 
@@ -123,8 +120,7 @@ fatals(char* fmt,...)
 
 
 void
-toomany(s)
-char *s;
+toomany(char *s)
 {
   char buffer[200];
 
@@ -135,8 +131,7 @@ char *s;
 
 
 void
-berror(s)
-char *s;
+berror(char *s)
 {
   fprintf(stderr, "internal error, %s\n", s);
   abort();

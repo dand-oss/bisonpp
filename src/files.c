@@ -112,10 +112,7 @@ static char *c_suffixes[]=
 
 
 char*
-stringappend(string1, end1, string2)
-char *string1;
-int end1;
-char *string2;
+stringappend(char *string1, int end1, char *string2)
 {
   register char *ostring;
   register char *cp, *cp1;
@@ -404,9 +401,7 @@ open_extra_files()
 	/* JF to make file opening easier.  This func tries to open file
 	   NAME with mode MODE, and prints an error message if it fails. */
 FILE *
-tryopen(name, mode)
-char *name;
-char *mode;
+tryopen(char *name, char *mode)
 {
   FILE  *ptr;
 
@@ -421,8 +416,7 @@ char *mode;
 }
 
 void
-done(k)
-int k;
+done(int k)
 {
   if (faction)
     {
